@@ -1,0 +1,117 @@
+@import "tailwindcss";
+@import 'react-calendar/dist/Calendar.css';
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-comfortaa: var(--font-comfortaa);
+  --font-roboto: var(--font-roboto);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bg {
+  background-color: #F7F5EF;
+}
+
+.secondary {
+  background-color: #D4B483;
+}
+
+.uploadthing-wrapper input[type="file"] {
+  display: none !important;
+}
+
+.uploadthing-wrapper .uploadthing-progress {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+}
+
+/* Today (not selected) */
+.react-calendar__tile--now:not(.react-calendar__tile--active) {
+  position: relative;
+  background: none !important;
+  color: black;
+  border: 1px solid gray;
+  z-index: 0;
+}
+
+.react-calendar__tile--now:not(.react-calendar__tile--active)::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  /* distance from top of tile */
+  left: px;
+  right: 0px;
+  bottom: 0px;
+  /* distance from bottom of tile */
+  border-radius: 6px;
+  background: #16A34A;
+  /* Tailwind blue-300 */
+  z-index: -1;
+}
+
+/* Selected day (not today) */
+.react-calendar__tile--active:not(.react-calendar__tile--now) {
+  position: relative;
+  border-radius: 8px;
+}
+
+.react-calendar__tile--active:not(.react-calendar__tile--now)::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  /* distance from top of tile */
+  left: 2px;
+  right: 0px;
+  bottom: 20px;
+  /* distance from bottom of tile */
+  border-radius: 6px;
+  background: #93C5FD;
+  /* Tailwind blue-300 */
+  z-index: -1;
+}
+
+/* Today + selected (today clicked) */
+.react-calendar__tile--now.react-calendar__tile--active {
+  position: relative;
+  /* green border overrides blue highlight */
+  border-radius: 8px;
+}
+
+.react-calendar__tile--now.react-calendar__tile--active::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  background-color: #DBF2FE;
+  /* optional: subtle lighter blue or green mix */
+  border-radius: 6px;
+  z-index: -1;
+}
+
+abbr {
+  text-decoration: none;
+}

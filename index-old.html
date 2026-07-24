@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Coming soon — PeerTopic</title>
+    <link rel="icon" href="favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Braah+One&display=swap" rel="stylesheet">
+    <style>
+        .braah-one {
+            font-family: "Braah One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 32px;
+            color: #8FAADC;
+        }
+
+        :root {
+            --bg: #0f1724;
+            --card: #0b1220;
+            --accent: #7c5cff;
+            --muted: #9aa4b2;
+            --glass: rgba(255, 255, 255, 0.03);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            /* min-height: 100vh; */
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: center;
+            justify-items: center;
+            align-items: center;
+            place-items: center;
+            background:
+                radial-gradient(1200px 600px at 10% 10%, rgba(124, 92, 255, 0.08), transparent),
+                radial-gradient(900px 400px at 90% 90%, rgba(0, 200, 255, 0.03), transparent),
+                var(--bg);
+            color: #e6eef6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 920px;
+            /* padding: 48px; */
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 36px;
+            display: flex;
+            gap: 28px;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.7);
+        }
+
+        .left {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px
+        }
+
+        .logo .sig {
+            font-weight: 700;
+            letter-spacing: -0.6px;
+        }
+
+        h1 {
+            margin: 0 0 12px 0;
+            font-size: 28px;
+        }
+
+        p.lead {
+            margin: 0 0 18px 0;
+            color: var(--muted);
+            max-width: 48ch;
+        }
+
+        ul.benefits {
+            margin: 14px 0 0 0;
+            padding: 0;
+            list-style: none;
+            color: var(--muted);
+        }
+
+        ul.benefits li {
+            margin: 8px 0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex: 0 0 8px;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 18px;
+            align-items: center;
+        }
+
+        /* Floating Modal Styles */
+        #confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /* .modal-content {
+            background-color: #263246;
+            padding: 20px 30px;
+            border-radius: 8px;
+            max-width: 90%;
+            width: 360px;
+            text-align: center;
+        } */
+        .modal-content {
+            background-color: #263246;
+            max-width: 600px;
+            /* wider on desktop/tablet */
+            width: 80vw;
+            /* responsive width relative to viewport */
+            box-sizing: border-box;
+            padding: 20px 30px;
+            border-radius: 8px;
+            text-align: center;
+            word-wrap: normal;
+            /* no forced breaks on larger screens */
+            white-space: nowrap;
+            /* prevent wrapping for long names */
+            overflow-x: auto;
+        }
+
+        .modal-content strong {
+            display: block;
+            margin: 12px 0;
+            font-size: 20px;
+            word-wrap: break-word;
+            /* Allows breaking within words */
+            word-break: break-word;
+            /* For better word breaking */
+            overflow-wrap: anywhere;
+            /* Modern alternative */
+            max-width: 100%;
+        }
+
+        .modal-content button {
+            margin: 10px 6px 0;
+            padding: 10px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal-content button#confirm-yes {
+            background-color: #ffffff;
+            color: #0b1220;
+        }
+
+        .modal-content button#confirm-no {
+            background-color: transparent;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+        }
+
+        .modal-content button:hover {
+            opacity: 0.9;
+        }
+
+        input[type="email"] {
+            flex: 1;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            /* background: rgba(255, 255, 255, 0.02); */
+            background: #4d5d73;
+            color: inherit;
+            outline: none;
+            font-size: 15px;
+            width: 100%;
+            color: #ffffff;
+        }
+
+        #email::placeholder {
+            color: #ffffff;
+            opacity: 0.5;
+            /* Ensure it's fully opaque */
+        }
+
+        button.cta {
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: 0;
+            background: linear-gradient(90deg, var(--accent), #4ec5ff);
+            color: #041025;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 15px;
+            box-shadow: 0 6px 18px rgba(124, 92, 255, 0.16);
+            margin: 16px 0px;
+        }
+
+        small.privacy {
+            display: block;
+            margin-top: 10px;
+            color: var(--muted);
+        }
+
+        .right {
+            width: 240px;
+            text-align: center;
+        }
+
+        .mock {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border-radius: 12px;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .success {
+            display: none;
+            padding: 18px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, #06202a, #03131a);
+            border: 1px solid rgba(0, 255, 200, 0.06);
+            color: #bfffe6;
+            margin-top: 12px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width:720px) {
+            .card {
+                flex-direction: column;
+                padding: 24px
+            }
+
+            .right {
+                width: 100%
+            }
+
+            .modal-content {
+                max-width: 90vw;
+                /* narrower for small screens */
+                white-space: normal;
+                /* allow wrapping */
+                word-wrap: break-word;
+                overflow-x: visible;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card" role="region" aria-label="Join the waitlist">
+            <div class="left">
+                <div class="logo braah-one"><span class="sig">PeerTopic</span></div>
+                <span style="display:block;margin-bottom: 8px; color:var(--muted)">
+                    Teach what you know. Get paid.</span>
+                <h1>Join PeerTopic and get paid to teach what you know.</h1>
+                <h1>Get notified when we're live.</h1>
+                <p class="lead">Peertopic is a [work in progress] marketplace where you get paid for tutoring your
+                    peers.</p>
+                <p class="lead">Sign up and receive early access, exclusive launch offers, and occasional updates. We
+                    hate spam — only important news.</p>
+                <ul class="benefits" aria-hidden="false">
+                    <li><span class="dot" aria-hidden="true"></span> You know at least one concept that you can teach
+                        well</li>
+                    <li><span class="dot" aria-hidden="true"></span> Your peers want to learn from you</li>
+                    <li><span class="dot" aria-hidden="true"></span> You get paid for your time</li>
+                </ul>
+
+                <form id="waitlistForm" class="form" novalidate>
+                    <label for="email" class="sr-only" style="position:absolute; left:-9999px;">Email</label>
+                    <input spellcheck="false" autocapitalize="none" id="email" name="email" type="email"
+                        inputmode="email" autocomplete="email" placeholder="your@email.com" required />
+                    <button class="cta" type="submit">Get early access</button>
+                </form>
+                <small class="privacy">We’ll only send product updates and the launch invite. Unsubscribe anytime. <a
+                        href="privacy.html" style="color:inherit; text-decoration:underline;">Privacy</a></small>
+
+                <div id="confirmation-modal">
+                    <div class="modal-content">
+                        <p>Is this correct?</p>
+                        <strong id="email-preview"></strong>
+                        <button id="confirm-yes" onclick="sendEmail()">Yes</button>
+                        <button id="confirm-no" onclick="goBack()">Back</button>
+                    </div>
+                </div>
+
+                <div id="successMessage" class="success" role="status" aria-live="polite">
+                    🎉 Thanks — you’re on the list! You'll get an email when we're ready to launch.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /*
+          Replace FORM_ENDPOINT with the API/url you will post to.
+          - For Formspree or Formcarry: use the provided endpoint.
+          - For Mailchimp: use the form action URL they give you or use a server to talk to Mailchimp.
+          - For Supabase: call your serverless function or Supabase REST endpoint.
+        */
+        const FORM_ENDPOINT = "https://formspree.io/f/mwprypra";
+
+        const form = document.getElementById('waitlistForm');
+        const emailInput = document.getElementById('email');
+        const successEl = document.getElementById('successMessage');
+        const modal = document.getElementById('confirmation-modal');
+        const emailPreview = document.getElementById('email-preview');
+
+        function validateEmail(email) {
+            // basic safe validation
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+            if (!validateEmail(email)) {
+                emailInput.focus();
+                emailInput.setAttribute('aria-invalid', 'true');
+                return;
+            }
+
+            emailPreview.textContent = email;
+            modal.style.display = 'flex';
+        });
+
+        function goBack() {
+            modal.style.display = 'none';
+        }
+
+        async function sendEmail() {
+            modal.style.display = 'none';
+            const email = emailInput.value.trim();
+            emailInput.setAttribute('disabled', 'true');
+            const btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+
+            try {
+                const resp = await fetch(FORM_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                if (resp.ok) {
+                    successEl.style.display = 'block';
+                    form.classList.add('hidden');
+                } else {
+                    // Some providers return 422 or redirect; attempt fallback
+                    const txt = await resp.text();
+                    // alert('Could not submit form: ' + (resp.status || '') + ' ' + txt);
+                    emailInput.removeAttribute('disabled');
+                    btn.disabled = false;
+                    btn.textContent = 'Get early access';
+                }
+            } catch (err) {
+                console.error(err);
+                // alert('Network error — please try again or email support@peertopic.com');
+                emailInput.removeAttribute('disabled');
+                btn.disabled = false;
+                btn.textContent = 'Get early access';
+            }
+        }
+    </script>
+</body>
+
+</html>
